@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "Open EML & MSG Files",
+  "version": "1.0",
+  "description": "Opens files with .eml or .msg extension directly with Outlook.",
+  "permissions": [],
+  "host_permissions": ["<all_urls>"],
+  "action": {
+    "default_icon": {
+    },
+    "default_title": "User Guide",
+    "default_popup": "guide.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
