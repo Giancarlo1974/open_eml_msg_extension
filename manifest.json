@@ -3,7 +3,11 @@
   "name": "Open EML & MSG Files",
   "version": "1.0",
   "description": "Opens files with .eml or .msg extension directly with Outlook.",
-  "permissions": [],
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
   "host_permissions": ["<all_urls>"],
   "action": {
     "default_icon": {

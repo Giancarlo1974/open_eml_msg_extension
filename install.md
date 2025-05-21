@@ -28,6 +28,17 @@ Double-click:
 
 C:\eml_opener\emlopen.reg
 
+
+⚠️ Antivirus Warning
+Some antivirus software might block or quarantine the eml_opener.exe file.
+This is a false positive, but it can prevent the tool from working correctly.
+
+👉 To fix this, add an exception (exclusion) in your antivirus for this path:
+
+C:\eml_opener\eml_opener.exe
+
+💡 Check your antivirus help page for how to add exclusions.
+
 ---
 
 ## ✅ Ready to Use
