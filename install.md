@@ -39,7 +39,7 @@ C:\eml_opener\emlopen.reg
 
 ### ✉️ Step 2: Test It  
 🚀 Try opening this test email directly in Outlook (no need to save it):  
-👉 [**Click to open test email**](https://github.com/Giancarlo1974/open_eml_msg_extension/blob/main/test.msg)
+👉 [**Click to open test email**](https://github.com/Giancarlo1974/open_eml_msg_extension/raw/refs/heads/main/test.msg)
 
 ---
 
