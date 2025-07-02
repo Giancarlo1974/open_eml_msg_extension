@@ -1,6 +1,6 @@
 # EML Opener Helper - Chrome Extension to open Email Files Fast in Outlook
 
-Do you download .eml and .msg email files just to open them? EML Opener Helper is a smart tool for Chrome. It helps you open these email files right from your web browser into Outlook. Just one click! You don't need to download them first. This saves you time and helps you work better. It's an easier way to handle your email files."
+Do you download .eml and .msg email files just to open them? EML Opener Helper is a smart tool for Chrome. It helps you open these email files right from your web browser into Outlook. Just one click! You don't need to download them first. This saves you time and helps you work better. It's an easier way to handle your email files.
 
 
 ## Installation
