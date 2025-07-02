@@ -61,3 +61,10 @@ When the user clicks this link:
 - The browser is redirected to a custom URL scheme (e.g., emlopen://...).
 - A registered native application handles the custom URL and opens the file.
 
+### ⭐️ Like It? Star It!
+🌟 Love this project? Show your support!
+If this extension helped you open .eml or .msg files easily in your browser — consider giving it a ⭐️!
+It only takes a second and really helps others discover the project.
+
+Your support keeps this project alive and improving. Thanks! 🙌
+
