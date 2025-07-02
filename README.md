@@ -3,8 +3,10 @@
 EML Opener Helper is a Chrome extension to open files with .eml or .msg extension directly with Outlook
 
 ## Installation
-1. Load unpacked extension in Chrome (chrome://extensions).
-2. Install [eml_opener](https://github.com/Giancarlo1974/open_eml_msg_extension/blob/main/install.md)
+1. Open Chrome and go to `chrome://extensions`.
+2. Enable **Developer mode** (top right).
+3. Click **Load unpacked** and select the folder of the extension.
+4. Install [eml_opener](https://github.com/Giancarlo1974/open_eml_msg_extension/blob/main/install.md) by following the instructions in the link.
 ---
 
 ## Notes
