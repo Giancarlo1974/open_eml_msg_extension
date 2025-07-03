@@ -19,9 +19,9 @@ document.addEventListener('mousedown', async function (e) {
       e.preventDefault();
       e.stopImmediatePropagation();
 
-      // console.log('[Open EML & MSG] Clicked link:', href);
+      // console.log('[Open EML & MSG] Clicked link:', url);
 
-      const encoded = encodeURIComponent(href);
+      const encoded = encodeURIComponent(url);
       const customUrl = `emlopen://${encoded}`;
 
       // console.log('[Open EML & MSG] Redirecting to custom protocol:', customUrl);
