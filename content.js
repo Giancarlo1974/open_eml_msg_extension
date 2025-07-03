@@ -1,4 +1,4 @@
-document.addEventListener('mousedown', async function (e) {
+document.addEventListener('click', async function (e) {
 
   const link = e.target.closest('a');
   if (!link || !link.href) return;
