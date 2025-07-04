@@ -1,68 +1,70 @@
+// EML Opener Helper - Chrome Extension
+// This extension lets users open .eml and .msg email files directly in Outlook from the browser.
+// It listens for clicks on links to these files and redirects them using a custom protocol (emlopen://),
+// so a native app can handle the file without the user needing to download it first.
+
 /**
- * Helper function for direct download without relaunching click
- * This function adds a special attribute to the original link to avoid
- * being intercepted by our own click listener, then clicks it directly
+ * Triggers a direct download of the link, bypassing our extension's click logic.
+ * Adds a special attribute to the link so our listener ignores it, then clicks it.
+ * Used as a fallback if the link is not an email file.
+ * @param {HTMLElement} link - The <a> element to trigger download on
  */
-function delayedDownload(link, url) {
-  console.log('delayedDownload: ultra simplified version');
-  
-  // Add special attribute to prevent our listener from intercepting this link
+function directDownload(link) {
+  // Mark this link to be ignored by our click handler
   link.setAttribute('data-emlopen-ignore', 'true');
-  
-  // Click the original link directly (preserves any target attribute)
+  // Simulate a click to start the download (browser default behavior)
   link.click();
 }
 
 /**
- * Main click event listener for the extension
- * This intercepts all clicks on links and handles them based on the URL or content type
+ * Main click event handler for the extension.
+ * Intercepts all clicks on <a> links in the page.
  */
 document.addEventListener('click', async function (e) {
-  // Find if the clicked element is a link or is inside a link
+  // Try to find the nearest <a> (link) element that was clicked
   const link = e.target.closest('a');
-  if (!link || !link.href) return; // Exit if not a link or no href
-  
-  // Ignore links with data-emlopen-ignore attribute (temporary links for downloads)
-  if (link.hasAttribute('data-emlopen-ignore')) {
-    console.log('Temporary download link, ignoring');
-    return;
-  }
 
-  console.log('Evaluating link');
+  // If not a link, or no href, or this link should be ignored, do nothing
+  if (!link || !link.href || link.hasAttribute('data-emlopen-ignore')) return;
 
-  // 1. Block default link behavior immediately
+  // Stop the browser from following the link as usual
   e.preventDefault();
   e.stopImmediatePropagation();
 
+  // Get the URL from the link
   const url = link.href;
+  let encodedUrl = '';
 
-  // 2. First check if it's an .eml or .msg file based on extension
+  // STEP 1: Check if the link points to a .eml or .msg file by extension
   if (url.match(/\.(eml|msg)(\?.*)?$/i)) {
-    // If it's an email file, encode the URL and open with our custom protocol
-    const encoded = encodeURIComponent(url);
-    const customUrl = `emlopen://${encoded}`;
+    // If yes, encode the URL for safe use in a custom protocol
+    encodedUrl = encodeURIComponent(url);
+  } else {
+    // STEP 2: If not by extension, check the file's content type with a HEAD request
+    try {
+      const res = await fetch(url, {
+        method: 'HEAD', // Only fetch headers, not the whole file
+        mode: 'cors'    // Allow cross-origin requests
+      });
+      const contentType = res.headers.get('content-type');
+      // If the content type matches Outlook files, treat as email file
+      if (contentType && contentType.includes('application/vnd.ms-outlook')) {
+        encodedUrl = encodeURIComponent(url);
+      }
+    } catch (err) {
+      // If there is an error checking the file type, log it but continue
+      console.error('Error in HEAD request:', err);
+    }
+  }
+
+  // STEP 3: If we determined it's an email file, redirect with the custom protocol
+  if (encodedUrl !== '') {
+    const customUrl = `emlopen://${encodedUrl}`;
     window.location.href = customUrl;
     return;
+  } else {
+    // STEP 4: Otherwise, just trigger a normal download
+    directDownload(link);    
   }
 
-  // 3. If not identified by extension, check content type with HEAD request
-  try {
-    const res = await fetch(url, {
-      method: 'HEAD',
-      mode: 'cors'
-    });
-    const contentType = res.headers.get('content-type');
-    // 4. If it's an Outlook MIME type, use our custom protocol
-    if (contentType && contentType.includes('application/vnd.ms-outlook')) {
-      const customUrl = url.replace('https', 'emlopen');
-      window.location.href = customUrl;
-      return;
-    }
-  } catch (err) {
-    console.error('Error in HEAD request:', err);
-  }
-
-  // 5. If no special handling was triggered, use regular download
-  console.log('No special handling needed, using regular download');
-  delayedDownload(link, url);
 }, true);
